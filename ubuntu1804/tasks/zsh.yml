@@ -1,0 +1,19 @@
+- name: Install zsh
+  apt:
+    pkg:
+    - zsh
+    - peco
+    update_cache: yes
+    state: latest
+
+- name: Copy .zshrc
+  copy:
+    src: copy/.zshrc
+    dest: "{{ home_dir }}/.zshrc"
+
+- name: Register zsh_path
+  command: which zsh
+  register: zsh_path
+
+- name: Change the default shell to zsh
+  command: chsh -s {{ zsh_path.stdout }}

@@ -1,0 +1,7 @@
+- name: Install apt packages
+  apt:
+    pkg:
+    - git
+    - sshfs
+    update_cache: yes
+    state: latest

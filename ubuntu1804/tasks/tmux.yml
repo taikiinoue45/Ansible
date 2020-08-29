@@ -1,0 +1,10 @@
+- name: Install tmux
+  apt:
+    name: tmux
+    update_cache: yes
+    state: latest
+
+- name: Copy .tmux.conf
+  copy:
+    src: copy/.tmux.conf
+    dest: "{{ home_dir }}/.tmux.conf"
