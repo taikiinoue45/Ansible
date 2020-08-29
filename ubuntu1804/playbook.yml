@@ -5,5 +5,9 @@
     - include_tasks: tasks/apt_packages.yml
     - include_tasks: tasks/zsh.yml
     - include_tasks: tasks/tmux.yml
+    - include_tasks: tasks/cuda_10_2.yml
     - include_tasks: tasks/docker.yml
     - include_tasks: tasks/nvidia_docker.yml
+    - name: Reboot
+      become: true
+      reboot:
