@@ -8,7 +8,7 @@
 
 - name: Copy .zshrc
   copy:
-    src: copy/.zshrc
+    src: .zshrc
     dest: "{{ home_dir }}/.zshrc"
 
 - name: Register zsh_path

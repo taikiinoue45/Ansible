@@ -3,7 +3,6 @@
     url: https://nvidia.github.io/nvidia-docker/gpgkey
     state: present
 
-
 - name: Add nvidia-docker repository to apt sources
   apt_repository:
     repo: "{{ item }}"
