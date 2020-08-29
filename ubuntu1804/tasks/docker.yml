@@ -1,4 +1,5 @@
 - name: Install docker's requirements
+  become: true
   apt:
     pkg:
     - apt-transport-https
@@ -10,17 +11,38 @@
     state: latest
 
 - name: Add docker gpg apt key
+  become: true
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
 - name: Add docker repository to apt sources
+  become: true
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu bionic stable
     state: present
 
 - name: Install docker-ce
+  become: true
   apt:
     name: docker-ce
     update_cache: yes
     state: present
+
+- name: Create docker group
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Register username
+  become: false
+  command: whoami
+  register: username
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ username.stdout }}"
+    group: docker
+    append: yes

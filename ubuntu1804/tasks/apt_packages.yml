@@ -1,4 +1,5 @@
 - name: Install apt packages
+  become: true
   apt:
     pkg:
     - git
