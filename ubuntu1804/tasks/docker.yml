@@ -10,16 +10,19 @@
     update_cache: yes
     state: latest
 
-- name: Add docker gpg apt key
+- name: Add docker apt key
   become: true
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: Add docker repository to apt sources
+- name: Add docker to /etc/apt/sources.list.d
   become: true
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    filename: docker
+    mode: 0644
+    update_cache: yes
     state: present
 
 - name: Install docker-ce
@@ -35,14 +38,9 @@
     name: docker
     state: present
 
-- name: Register username
-  become: false
-  command: whoami
-  register: username
-
 - name: Add user to docker group
   become: true
   user:
-    name: "{{ username.stdout }}"
+    name: "{{ ansible_user }}"
     group: docker
     append: yes

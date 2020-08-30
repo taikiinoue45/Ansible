@@ -1,0 +1,22 @@
+- name: Check if /opt/conda exists
+  stat:
+    path: /opt/conda
+  register: conda_exists
+
+- name: Download miniconda installer
+  become: true
+  get_url:
+    url: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    dest: /tmp/miniconda.sh
+    mode: 0755
+  when: conda_exists.stat.exists == False
+
+- name: Install miniconda
+  become: true
+  command: /tmp/miniconda.sh -b -p /opt/conda
+  when: conda_exists.stat.exists == False
+
+- name: Install python
+  become: true
+  command: /opt/conda/bin/conda install -y python=3.6.5
+  when: conda_exists.stat.exists == False

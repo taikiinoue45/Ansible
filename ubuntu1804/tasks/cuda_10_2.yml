@@ -1,22 +1,20 @@
+- name: Add cuda 10.2 apt key
+  become: true
+  apt_key:
+    url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+    state: present
+
+- name: Add cuda 10.2 to /etc/apt/sources.list.d
+  become: true
+  apt:
+    deb: http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
+    state: present
+
 - name: Download pin file
   become: true
   get_url:
     url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
     dest: /etc/apt/preferences.d/cuda-repository-pin-600
-
-- name: Download deb file
-  become: false
-  get_url:
-    url: http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
-    dest: ~/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
-
-- name: dpkg deb file
-  become: true
-  command: dpkg -i cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
-
-- name: Add apt key
-  become: true
-  command: apt-key add /var/cuda-repo-10-2-local-10.2.89-440.33.01/7fa2af80.pub
 
 - name: Install cuda 10.2
   become: true
@@ -24,5 +22,3 @@
     name: cuda-10-2
     update_cache: yes
     state: present
-
-

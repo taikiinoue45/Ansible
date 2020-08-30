@@ -20,4 +20,4 @@
 
 - name: Change the default shell to zsh
   become: true
-  command: chsh -s {{ zsh_path.stdout }}
+  command: chsh -s {{ zsh_path.stdout }} {{ ansible_user }}
