@@ -1,0 +1,8 @@
+- name: Install apt packages
+  become: true
+  apt:
+    pkg:
+    - git
+    - sshfs
+    update_cache: yes
+    state: latest

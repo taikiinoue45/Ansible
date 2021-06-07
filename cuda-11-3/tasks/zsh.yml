@@ -1,0 +1,23 @@
+- name: Install zsh
+  become: true
+  apt:
+    pkg:
+    - zsh
+    - peco
+    update_cache: yes
+    state: latest
+
+- name: Copy .zshrc
+  become: false
+  copy:
+    src: .zshrc
+    dest: ~/.zshrc
+
+- name: Register zsh_path
+  become: false
+  command: which zsh
+  register: zsh_path
+
+- name: Change the default shell to zsh
+  become: true
+  command: chsh -s {{ zsh_path.stdout }} {{ ansible_user }}
